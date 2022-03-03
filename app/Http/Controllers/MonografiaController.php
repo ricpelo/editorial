@@ -47,7 +47,14 @@ class MonografiaController extends Controller
      */
     public function show(Monografia $monografia)
     {
-        //
+        // foreach ($monografia->articulos as $articulo) {
+        //     $articulo->titulo
+        // }
+        // $monografia->articulos_sum_num_paginas
+        return view('monografias.show', [
+            'monografia' => $monografia->with('articulos')->withSum('articulos', 'num_paginas')->first(),
+        ]);
+
     }
 
     /**

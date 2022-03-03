@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\MonografiaController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -20,5 +21,8 @@ Route::get('/', function () {
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth'])->name('dashboard');
+
+Route::resource('monografias', MonografiaController::class)
+    ->middleware(['auth', 'can:solo-admin']);
 
 require __DIR__.'/auth.php';
