@@ -1,6 +1,8 @@
 <?php
 
 use App\Http\Controllers\MonografiaController;
+use App\Models\Articulo;
+use App\Models\Monografia;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -24,5 +26,14 @@ Route::get('/dashboard', function () {
 
 Route::resource('monografias', MonografiaController::class)
     ->middleware(['auth', 'can:solo-admin']);
+
+Route::get('/articulos', function () {
+    $articulos = Articulo::withCount(['autores', 'monografias'])->get();
+    return view('articulos', [
+        'articulos' => $articulos,
+    ]);
+});
+
+Route::get('/monografias/{monografia}/autores', [MonografiaController::class, 'autores']);
 
 require __DIR__.'/auth.php';
